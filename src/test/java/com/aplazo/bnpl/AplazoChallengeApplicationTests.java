@@ -1,4 +1,4 @@
-package donovan.rincon.aplazo_challenge;
+package com.aplazo.bnpl;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

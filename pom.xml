@@ -8,11 +8,11 @@
 		<version>3.4.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>donovan.rincon</groupId>
-	<artifactId>aplazo-challenge</artifactId>
+	<groupId>com.aplazo</groupId>
+	<artifactId>bnpl</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>aplazo-challenge</name>
-	<description>Aplazo challenge</description>
+	<name>BNPL</name>
+	<description>Aplazo BNPL</description>
 	<url/>
 	<licenses>
 		<license/>
