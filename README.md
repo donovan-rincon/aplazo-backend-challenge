@@ -10,17 +10,17 @@ Given this, one of the main technological requirements of the business is the cr
 
 ## Business Concepts
 - **Clients:** Registered individuals on the business platform who are granted a credit line.
-- **Credit Line:** The amount of money assigned to a client for product purchases.
-- **Loan:** Each purchase is converted into a loan, deducting the loan amount from the client's credit line.
+- **Credit Line:** The amount of money assigned to a customer for product purchases.
+- **Loan:** Each purchase is converted into a loan, deducting the loan amount from the customer's credit line.
 - **Payment Scheme and Interest Rate:** Each loan has an assigned payment scheme and interest rate. Generally, the more installments in the scheme, the higher the interest rate.
 
 ## Online Shopping System
 
 ### Endpoint 01: Client Registration
-Create a REST endpoint to register a new client. Once stored in the database, the response should include the assigned credit line amount and the client identifier.
+Create a REST endpoint to register a new customer. Once stored in the database, the response should include the assigned credit line amount and the customer identifier.
 
 #### Credit Line Assignment Rules
-The assigned credit line amount is based on the client's age:
+The assigned credit line amount is based on the customer's age:
 - **$3,000** for clients aged **18 to 25** years.
 - **$5,000** for clients aged **26 to 30** years.
 - **$8,000** for clients aged **31 to 65** years.
@@ -33,7 +33,7 @@ The assigned credit line amount is based on the client's age:
 | `birthDate (YYYY/MM/DD)` | `Assigned Credit Amount` |
 
 ### Endpoint 02: Purchase Registration
-Create a REST endpoint to register a client's purchase using the client ID retrieved from the previous endpoint. The purchase amount **must not exceed the assigned credit line**; otherwise, an appropriate error should be returned before storing the transaction in the database.
+Create a REST endpoint to register a customer's purchase using the customer ID retrieved from the previous endpoint. The purchase amount **must not exceed the assigned credit line**; otherwise, an appropriate error should be returned before storing the transaction in the database.
 
 #### Input & Output
 | Input         | Output         |
@@ -50,8 +50,8 @@ The system should have the following payment schemes:
 | **Scheme 2** | 5                 | Biweekly  | 16%          |
 
 #### Payment Scheme Assignment Rules
-- Assign **Scheme 1** if the first name of the client starts with **C, L, or H**.
-- Assign **Scheme 2** if the **client ID is greater than 25**.
+- Assign **Scheme 1** if the first name of the customer starts with **C, L, or H**.
+- Assign **Scheme 2** if the **customer ID is greater than 25**.
 - Evaluate the rules in order, applying only the first applicable one.
 - If no rule applies, **Scheme 2 is assigned by default**.
 

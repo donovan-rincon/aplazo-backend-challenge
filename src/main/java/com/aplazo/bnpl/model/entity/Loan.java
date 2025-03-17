@@ -1,59 +1,38 @@
 package com.aplazo.bnpl.model.entity;
 
-import java.util.UUID;
-
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.time.LocalDateTime;
+
+import java.util.List;
+
+@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Loan {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID) // Use GenerationType.UUID to generate UUIDs
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    private UUID customerId;
-    private String loanStatus;
-    private double amount;
-    private String createdAt;
+    @Column(nullable = false)
+    private int customerId;
 
-    public UUID getId() {
-        return id;
-    }
+    @Column(nullable = false)
+    private Double amount;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private String status; // Enum for LoanStatus (e.g., ACTIVE, LATE)
 
-    public UUID getCustomerId() {
-        return customerId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "payment_plan_id", nullable = false)
+    private PaymentPlan paymentPlan; // Associated payment plan
 
-    public void setCustomerId(UUID customerId) {
-        this.customerId = customerId;
-    }
+    @OneToMany(mappedBy = "loan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Installment> installments; // List of generated installments
 
-    public String getLoanStatus() {
-        return loanStatus;
-    }
-
-    public void setLoanStatus(String loanStatus) {
-        this.loanStatus = loanStatus;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 }

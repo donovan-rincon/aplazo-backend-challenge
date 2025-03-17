@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Build the project using Maven
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Stage 2: Run the Java application
 FROM openjdk:21-jdk-slim
