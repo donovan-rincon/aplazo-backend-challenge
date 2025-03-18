@@ -3,7 +3,7 @@ package com.aplazo.bnpl.service;
 import com.aplazo.bnpl.model.dto.CustomerRequest;
 import com.aplazo.bnpl.model.dto.CustomerResponse;
 import com.aplazo.bnpl.model.entity.Customer;
-import com.aplazo.bnpl.repository.ClientRepository;
+import com.aplazo.bnpl.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,9 +14,9 @@ import java.time.LocalDate;
 
 @Service
 public class CustomerService {
-    private final ClientRepository clientRepository;
+    private final CustomerRepository clientRepository;
 
-    public CustomerService(ClientRepository clientRepository) {
+    public CustomerService(CustomerRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
@@ -30,24 +30,29 @@ public class CustomerService {
         }
     }
 
-    public CustomerResponse createClient(CustomerRequest clientRequest) {
+    public CustomerResponse createCustomer(CustomerRequest customerRequest) {
         Customer customer = new Customer();
-        customer.setFirstName(clientRequest.getFirstName());
-        customer.setLastName(clientRequest.getLastName());
-        customer.setSecondLastName(clientRequest.getSecondLastName());
-        customer.setDateOfBirth(clientRequest.getDateOfBirth().toString());
+        customer.setFirstName(customerRequest.getFirstName());
+        customer.setLastName(customerRequest.getLastName());
+        customer.setSecondLastName(customerRequest.getSecondLastName());
+        customer.setDateOfBirth(customerRequest.getDateOfBirth().toString());
 
-        int age = getAge(clientRequest.getDateOfBirth());
+        /*
+         * - $3,000 for clients aged 18 to 25 years.
+         * - $5,000 for clients aged 26 to 30 years.
+         * - $8,000 for clients aged 31 to 65 years.
+         * - Clients under 18 or over 65 are not accepted.
+         */
+        int age = getAge(customerRequest.getDateOfBirth());
         double creditLine = 0.0;
-        if (age >= 18 && age <= 25) {
+        if (age < 18 || age > 65) {
+            return null;
+        } else if (age >= 18 && age <= 25) {
             creditLine = 3000.0;
         } else if (age >= 26 && age <= 30) {
             creditLine = 5000.0;
         } else if (age >= 31 && age <= 65) {
             creditLine = 8000.0;
-        } else {
-            // TODO: return error here
-            return null;
         }
         customer.setCreditLine(creditLine);
         customer.setCreditUsed(0.0);
@@ -62,7 +67,7 @@ public class CustomerService {
         return response;
     }
 
-    public CustomerResponse getClientById(int customerId) {
+    public CustomerResponse getCustomerById(int customerId) {
         Customer customer = clientRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Client not found"));
 

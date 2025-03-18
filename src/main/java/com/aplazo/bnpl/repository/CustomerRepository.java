@@ -4,5 +4,5 @@ import com.aplazo.bnpl.model.entity.Customer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClientRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 }

@@ -10,8 +10,9 @@ import jakarta.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "application_user") // renamed to avoid conflicts sql reserved words
 @Builder
-public class Customer {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Use auto-increment for integers
@@ -19,21 +20,14 @@ public class Customer {
     private int id;
 
     @Column(nullable = false)
-    private String firstName;
+    private String username;
 
     @Column(nullable = false)
-    private String lastName;
+    private String password;
 
-    private String secondLastName;
-
-    @Column(nullable = false)
-    private String dateOfBirth;
-
-    @Column(nullable = false)
-    private double creditLine;
-
-    @Column(nullable = false)
-    private double creditUsed;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer; // Reference to Customer entity
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
